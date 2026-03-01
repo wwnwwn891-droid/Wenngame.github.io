@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>War Game 2D</title>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    color: white;
+    font-family: Arial;
+}
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.player {
+    width: 40px;
+    height: 40px;
+    background: cyan;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.bullet {
+    width: 5px;
+    height: 10px;
+    background: yellow;
+    position: absolute;
+}
+.enemy {
+    width: 40px;
+    height: 40px;
+    background: red;
+    position: absolute;
+}
+</style>
+</head>
+<body>
+
+<div id="score">Skor: 0</div>
+<div class="player" id="player"></div>
+
+<script>
+let skor = 0;
+let player = document.getElementById("player");
+
+function tembak() {
+    let peluru = document.createElement("div");
+    peluru.className = "bullet";
+    peluru.style.left = player.offsetLeft + 18 + "px";
+    peluru.style.bottom = "60px";
+    document.body.appendChild(peluru);
+
+    let gerak = setInterval(() => {
+        peluru.style.bottom = peluru.offsetTop - 10 + "px";
+        if (peluru.offsetTop < 0) {
+            peluru.remove();
+            clearInterval(gerak);
+        }
+    }, 20);
+}
+
+document.addEventListener("keydown", e => {
+    if (e.key === " ") tembak();
+});
+
+function buatMusuh() {
+    let musuh = document.createElement("div");
+    musuh.className = "enemy";
+    musuh.style.top = "0px";
+    musuh.style.left = Math.random() * (window.innerWidth - 40) + "px";
+    document.body.appendChild(musuh);
+
+    let turun = setInterval(() => {
+        musuh.style.top = musuh.offsetTop + 3 + "px";
+        if (musuh.offsetTop > window.innerHeight) {
+            musuh.remove();
+            clearInterval(turun);
+        }
+    }, 30);
+}
+
+setInterval(buatMusuh, 1000);
+</script>
+
+</body>
+</html>
