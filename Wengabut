@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Game Lompat</title>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+}
+
+#game{
+width:300px;
+height:150px;
+border:2px solid black;
+margin:auto;
+position:relative;
+overflow:hidden;
+}
+
+#player{
+width:30px;
+height:30px;
+background:green;
+position:absolute;
+bottom:0;
+left:50px;
+}
+
+#obstacle{
+width:20px;
+height:30px;
+background:red;
+position:absolute;
+bottom:0;
+right:-20px;
+animation:jalan 2s infinite linear;
+}
+
+@keyframes jalan{
+0%{right:-20px;}
+100%{right:320px;}
+}
+
+.loncat{
+animation:loncat 0.5s;
+}
+
+@keyframes loncat{
+0%{bottom:0;}
+50%{bottom:70px;}
+100%{bottom:0;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎮 Game Lompat</h1>
+<p>Tekan layar / spasi untuk lompat</p>
+
+<div id="game">
+<div id="player"></div>
+<div id="obstacle"></div>
+</div>
+
+<script>
+
+let player = document.getElementById("player")
+let obstacle = document.getElementById("obstacle")
+
+function lompat(){
+if(player.classList != "loncat"){
+player.classList.add("loncat")
+
+setTimeout(function(){
+player.classList.remove("loncat")
+},500)
+}
+}
+
+document.addEventListener("keydown", lompat)
+document.addEventListener("click", lompat)
+
+let cek = setInterval(function(){
+
+let playerBottom = parseInt(window.getComputedStyle(player).getPropertyValue("bottom"))
+let obstacleRight = parseInt(window.getComputedStyle(obstacle).getPropertyValue("right"))
+
+if(obstacleRight > 230 && obstacleRight < 260 && playerBottom < 30){
+alert("Game Over 😅")
+location.reload()
+}
+
+},10)
+
+</script>
+
+</body>
+</html>nya 
